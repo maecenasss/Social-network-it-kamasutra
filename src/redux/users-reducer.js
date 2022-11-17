@@ -1,14 +1,10 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
+const SET_USERS = 'SET_USERS';
 
 let initialState =  {
-        users: [
-        {id: 1, followed: false, fullName: 'Sasha', status: 'Student', location: {country: 'Ukraine', city:'Kyiv'}},
-        {id: 2, followed: true, fullName: 'Oleg', status: 'Soldier', location: {country: 'Ukraine', city:'Yahniki'}},
-        {id: 3, followed: true, fullName: 'Sergiy', status: 'Boss', location: {country: 'Ukraine', city:'Sumy'}}
-        ],
-}
-
+    users: []
+};
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -22,8 +18,7 @@ const usersReducer = (state = initialState, action) => {
                     return u;  
                 })
             }
-        
-            
+                
         case UNFOLLOW: 
             return {
                 ...state,
@@ -34,7 +29,11 @@ const usersReducer = (state = initialState, action) => {
                     return u;  
                 })
             }
-            default:
+
+        case SET_USERS: 
+            return {...state, users: [...state.users, ...action.users ]}              
+            
+        default:
                  return state
         }
     }
@@ -42,6 +41,7 @@ const usersReducer = (state = initialState, action) => {
 //створюємо функці] для створення об'єктів (action) в MyPosts для додавання постів та їх зміни
 export const followActionCreator = (userID) => ({type: FOLLOW, userID })
 export const unfollowActionCreator = (userID) => ({type: UNFOLLOW, userID })
+export const setUsersActionCreator = (users) => ({type: SET_USERS, users })
 
 export default usersReducer;
 

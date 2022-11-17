@@ -7,6 +7,7 @@ import Profile from './components//Profile/Profile';
 import { Route, Routes} from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Users from './components/Users/Users';
+import UsersСontainer from './components/Users/UsersСontainer';
 
 
 const App = (props) => {
@@ -20,7 +21,7 @@ const App = (props) => {
         <Routes >
             <Route path = '/Dialogs' element = {<DialogsContainer />} />
             <Route path = '/Profile' element = {<Profile />} />
-            <Route path = '/Users' element = {<Users/>} />
+            <Route path = '/Users' element = {<UsersСontainer/>} />
 
         </Routes>
      
