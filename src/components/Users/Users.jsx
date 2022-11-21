@@ -1,15 +1,16 @@
+import axios from "axios";
 import React from "react";
 import styles from './users.module.css'
+import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
 
 let Users = (props) => {
 //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer
 if (props.users.length ===0) {    
-props.setUsers ([
-        {id: 1, photoUrl: 'https://yt3.ggpht.com/OHmYWgb5Eyq9OHvuoYTvU9Pc-5rkos9a85CmEwquJYbxFtyUeMqg8S_waOGDcU2NodnaeO0d=s900-c-k-c0x00ffffff-no-rj', followed: false, fullName: 'Sasha', status: 'Student', location: {country: 'Ukraine', city:'Kyiv'}},
-        {id: 2, photoUrl: 'https://yt3.ggpht.com/OHmYWgb5Eyq9OHvuoYTvU9Pc-5rkos9a85CmEwquJYbxFtyUeMqg8S_waOGDcU2NodnaeO0d=s900-c-k-c0x00ffffff-no-rj', followed: true, fullName: 'Oleg', status: 'Soldier', location: {country: 'Ukraine', city:'Yahniki'}},
-        {id: 3, photoUrl: 'https://yt3.ggpht.com/OHmYWgb5Eyq9OHvuoYTvU9Pc-5rkos9a85CmEwquJYbxFtyUeMqg8S_waOGDcU2NodnaeO0d=s900-c-k-c0x00ffffff-no-rj', followed: true, fullName: 'Sergiy', status: 'Boss', location: {country: 'Ukraine', city:'Sumy'}}
-        ]
-    ) 
+//take request to server to get users state & after get state - setUsers
+axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+props.setUsers(response.data.items)
+})
+
     }   
     return <div className='app-wrapper app-wrapper-content'>
         {//make areas from state - users
@@ -17,7 +18,7 @@ props.setUsers ([
                 {/* створюємо картинку юзера і кнопку фолов */}
                 <span>
                     <div>
-                        <img src={u.photoUrl} className = {styles.userPhoto} alt=""/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className = {styles.userPhoto} alt=""/>
                     </div>
                     <div>
                         {/* створюємо переключателі фолов і анфолов за допомогою тернарних операторів */}
@@ -28,13 +29,13 @@ props.setUsers ([
                 </span>
                 {/* створюємо області із іменем та статусом */}
                 <span>
-                    <div>{u.fullName}</div>
+                    <div>{u.name}</div>
                     <div>{u.status}</div>
                 </span>
                 {/* створюємо область та місто */}
                 <span>
-                    <div>{u.location.country}</div>
-                    <div>{u.location.city}</div>
+                    <div>{'u.location.country'}</div>
+                    <div>{'u.location.city'}</div>
                 </span>
             </div>)
         }
