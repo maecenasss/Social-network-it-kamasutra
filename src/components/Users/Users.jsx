@@ -4,15 +4,20 @@ import styles from './users.module.css'
 import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
 
 let Users = (props) => {
-//перед відрисовкою утворюємо юзерів, переносимо state із user-reducer
+
+let getUsers = () => 
+    {
+    //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer
 if (props.users.length ===0) {    
 //take request to server to get users state & after get state - setUsers
 axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
 props.setUsers(response.data.items)
-})
+    })
+}
 
-    }   
+    }
     return <div className='app-wrapper app-wrapper-content'>
+        <button onClick={getUsers}>Get Users</button>
         {//make areas from state - users
             props.users.map (u => <div key = {u.id}>
                 {/* створюємо картинку юзера і кнопку фолов */}
