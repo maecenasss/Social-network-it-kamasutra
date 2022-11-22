@@ -3,23 +3,22 @@ import React from "react";
 import styles from './users.module.css'
 import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
 
-let Users = (props) => {
-
-let getUsers = () => 
-    {
-    //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer
-if (props.users.length ===0) {    
-//take request to server to get users state & after get state - setUsers
-axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-props.setUsers(response.data.items)
-    })
-}
-
+//create class Users
+class Users extends React.Component {
+    constructor (props) {
+        super (props);
+        //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer 
+        //take request to server to get users state & after get state - setUsers
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            this.props.setUsers(response.data.items);
+        });
     }
+
+    //create method render what return jsx 
+    render () {
     return <div className='app-wrapper app-wrapper-content'>
-        <button onClick={getUsers}>Get Users</button>
-        {//make areas from state - users
-            props.users.map (u => <div key = {u.id}>
+           {//make areas from state - users
+            this.props.users.map (u => <div key = {u.id}>
                 {/* створюємо картинку юзера і кнопку фолов */}
                 <span>
                     <div>
@@ -28,8 +27,8 @@ props.setUsers(response.data.items)
                     <div>
                         {/* створюємо переключателі фолов і анфолов за допомогою тернарних операторів */}
                         { u.followed
-                        ? <button onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
-                        : <button onClick={() => {props.follow(u.id)}}>Follow</button>}
+                        ? <button onClick={() => {this.props.unfollow(u.id)}}>Unfollow</button>
+                        : <button onClick={() => {this.props.follow(u.id)}}>Follow</button>}
                     </div>
                 </span>
                 {/* створюємо області із іменем та статусом */}
@@ -45,6 +44,7 @@ props.setUsers(response.data.items)
             </div>)
         }
     </div>
+}
 }
 
 export default Users;
