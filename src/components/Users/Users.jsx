@@ -5,18 +5,21 @@ import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/asset
 
 //create class Users
 class Users extends React.Component {
-    constructor (props) {
-        super (props);
+    
+        //componentDidMount use for get request to server
+        componentDidMount () {
         //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer 
         //take request to server to get users state & after get state - setUsers
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            this.props.setUsers(response.data.items);
-        });
-    }
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(response => {
+                this.props.setUsers(response.data.items);
+            });
+        }
+    
 
     //create method render what return jsx 
     render () {
-    return <div className='app-wrapper app-wrapper-content'>
+        return <div className='app-wrapper app-wrapper-content'>
            {//make areas from state - users
             this.props.users.map (u => <div key = {u.id}>
                 {/* створюємо картинку юзера і кнопку фолов */}
