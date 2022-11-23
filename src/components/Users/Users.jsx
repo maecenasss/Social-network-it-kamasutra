@@ -20,6 +20,15 @@ class Users extends React.Component {
     //create method render what return jsx 
     render () {
         return <div className='app-wrapper app-wrapper-content'>
+           <div>
+            <span className={styles.selectedPage}>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+           </div>
+           
+           
            {//make areas from state - users
             this.props.users.map (u => <div key = {u.id}>
                 {/* створюємо картинку юзера і кнопку фолов */}
