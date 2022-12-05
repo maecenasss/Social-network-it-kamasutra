@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styles from './users.module.css'
 import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
 
@@ -24,7 +25,9 @@ let Users = (props) => {
          {/* створюємо картинку юзера і кнопку фолов */}
          <span>
              <div>
+                <NavLink to = {'/profile/' + u.id}>
                  <img src={u.photos.small != null ? u.photos.small : userPhoto} className = {styles.userPhoto} alt=""/>
+                 </NavLink>
              </div>
              <div>
                  {/* створюємо переключателі фолов і анфолов за допомогою тернарних операторів */}
