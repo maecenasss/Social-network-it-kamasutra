@@ -7,8 +7,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 //create loader on page Users
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-//create user Profile then you click to userPhoto
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
+
 
 let initialState =  {
     users: [],
@@ -17,8 +16,6 @@ let initialState =  {
     totalUsersCount: 50,
     currentPage: 1,
     isFetching: true,
-    profile: null
-
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -60,10 +57,6 @@ const usersReducer = (state = initialState, action) => {
         case TOGGLE_IS_FETCHING: { 
             return {...state, isFetching: action.isFetching}
         }
-        case SET_USER_PROFILE: { 
-            return {...state, profile: action.profile}
-        }
-
             
         default:
                  return state
@@ -77,7 +70,7 @@ export const setUsers = (users) => ({type: SET_USERS, users })
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount })
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching })
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile })
+
 
 export default usersReducer;
 

@@ -14,7 +14,7 @@ let store = configureStore ({
     sidebar: sidebarReducer,
     usersPage: usersReducer
     }
-})
+});
 
 window.store = store;
 
