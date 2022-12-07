@@ -25,7 +25,7 @@ let Users = (props) => {
          {/* створюємо картинку юзера і кнопку фолов */}
          <span>
              <div>
-                <NavLink to = {'/Profile/'}>
+                <NavLink to = {'/Profile/' + u.id}>
                  <img src={u.photos.small != null ? u.photos.small : userPhoto} className = {styles.userPhoto} alt=""/>
                  </NavLink>
              </div>

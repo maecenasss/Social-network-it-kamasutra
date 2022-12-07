@@ -12,18 +12,15 @@ const App = (props) => {
 
   return (
     <div className='app-wrapper'>
-    
           <Header />
-          <Navbar />
-     
+          <Navbar />    
         <Routes >
-            <Route path = '/Dialogs' element = {<DialogsContainer />} />
-            <Route path = '/Profile' element = {<ProfileContainer/>} />
-            <Route path = '/Users' element = {<UsersСontainer/>} />
-
-        </Routes>
-     
-        </div>
+            <Route path = '/dialogs' element = {<DialogsContainer />} />
+            <Route path = '/profile/:userId' element = {<ProfileContainer/>} />
+            <Route path = '/profile' element = {<ProfileContainer/>} />
+            <Route path = '/users' element = {<UsersСontainer/>} />
+        </Routes>     
+    </div>
 
     );
 }
