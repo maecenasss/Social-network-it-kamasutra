@@ -33,7 +33,8 @@ let Users = (props) => {
              <div>
                  {/* створюємо переключателі фолов і анфолов за допомогою тернарних операторів */}
                  { u.followed
-                 ? <button onClick={() => {
+                 ? <button disabled = {props.followingInProgress.some (id=>id===u.id)} onClick={() => {
+                    props.toggleFollowingProgress(true, u.id);
                     axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {withCredentials: true,
                 headers:{
                     'API-KEY': '56209ec5-7520-4f65-a0a3-50f8519fcb06'
@@ -41,10 +42,13 @@ let Users = (props) => {
                     .then(response => {
                         if (response.data.resultCode === 0) {
                             props.unfollow(u.id)
-                        }})
+                        }
+                        props.toggleFollowingProgress(false, u.id);
+                    })
 
                    }}>Unfollow</button>
-                 : <button onClick={() => {
+                 : <button disabled = {props.followingInProgress.some (id=>id===u.id)} onClick={() => {
+                    props.toggleFollowingProgress(true, u.id);
                     axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {withCredentials: true, 
                     headers:{
                         'API-KEY': '56209ec5-7520-4f65-a0a3-50f8519fcb06'
@@ -52,7 +56,8 @@ let Users = (props) => {
                             .then(response => {
                                 if (response.data.resultCode === 0) {
                                     props.follow(u.id)
-                                }})
+                                }
+                                props.toggleFollowingProgress(false, u.id);})
                    }}>Follow</button>}
              </div>
          </span>
