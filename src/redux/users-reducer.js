@@ -1,3 +1,5 @@
+import { usersAPI } from "../components/Api/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -8,6 +10,7 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 //create loader on page Users
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
+
 
 let initialState =  {
     users: [],
@@ -79,6 +82,19 @@ export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, current
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount })
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching })
 export const toggleFollowingProgress = (isFetching, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID })
+
+//створюємо thunk функцію для отримання юзерів із сервера
+export const getUsers = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch (toggleIsFetching (true));
+
+        usersAPI.getUsers (currentPage, pageSize).then(data => {
+                dispatch (toggleIsFetching (false)); 
+                dispatch (setUsers(data.items));
+                dispatch (setTotalUsersCount(data.totalCount=100))
+        });
+    }
+} 
 
 export default usersReducer;
 

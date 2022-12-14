@@ -1,35 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching} from "../../redux/users-reducer";
+import { follow, unfollow, setCurrentPage,  getUsers} from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
-import { usersAPI } from "../Api/api";
 import { toggleFollowingProgress } from "../../redux/users-reducer";
+
 
 //create class Users і компоненту для запитів на сервер
 class UsersContainer extends React.Component {
     
     //componentDidMount use for get request to server
     componentDidMount () {
-    //перед відрисовкою утворюємо юзерів, переносимо state із user-reducer 
-    //take request to server to get users state & after get state - setUsers
-    this.props.toggleIsFetching (true)    
-    
-    usersAPI.getUsers (this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.toggleIsFetching (false); 
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount=100)
-        });
+    //thunk function - фунція, що створена в users-reducer for patching actions 
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
     //create method to change pages with onClick
     onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers (pageNumber, this.props.pageSize).then(data => {
-            this.props.toggleIsFetching (false) 
-            this.props.setUsers(data.items)
-            
-        });
+//thunk function - фунція, що створена в users-reducer for patching actions
+       this.props.getUsers (pageNumber, this.props.pageSize)
     }
 
 //create method render what return jsx 
@@ -90,11 +78,10 @@ export default connect (mapStateToProps,
     {
         follow,
         unfollow,
-        setUsers,
         setCurrentPage,
-        setTotalUsersCount,
-        toggleIsFetching, 
-        toggleFollowingProgress        
+        toggleFollowingProgress, 
+        //thunk - фунція, що створена в users-reducer for patching actions
+        getUsers   
         },  
    
     ) (UsersContainer);
