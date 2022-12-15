@@ -32,7 +32,6 @@ render () {
                 users = {this.props.users}
                 follow = {this.props.follow}
                 unfollow = {this.props.unfollow}
-                toggleFollowingProgress = {this.props.toggleFollowingProgress}
                 followingInProgress = {this.props.followingInProgress}
                 />
     </>  

@@ -75,8 +75,8 @@ const usersReducer = (state = initialState, action) => {
     }
 
 //створюємо функці] для створення об'єктів (action) в MyPosts для додавання постів та їх зміни
-export const follow = (userID) => ({type: FOLLOW, userID })
-export const unfollow = (userID) => ({type: UNFOLLOW, userID })
+export const followSuccess = (userID) => ({type: FOLLOW, userID })
+export const unfollowSuccess = (userID) => ({type: UNFOLLOW, userID })
 export const setUsers = (users) => ({type: SET_USERS, users })
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount })
@@ -94,7 +94,33 @@ export const getUsers = (currentPage, pageSize) => {
                 dispatch (setTotalUsersCount(data.totalCount=100))
         });
     }
-} 
+}
+//створємо thunk функцію для підписування/відписування від юзерів
+export const follow = (userID) => {
+    return (dispatch) => {
+        dispatch (toggleFollowingProgress(true, userID));
+        usersAPI.follow (userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followSuccess(userID));
+        }
+        dispatch (toggleFollowingProgress(false, userID));
+        });
+    }
+}
+
+export const unfollow = (userID) => {
+    return (dispatch) => {
+        dispatch (toggleFollowingProgress(true, userID));
+        usersAPI.unfollow (userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollowSuccess(userID));
+        }
+        dispatch (toggleFollowingProgress(false, userID));
+        });
+    }
+}
 
 export default usersReducer;
 
