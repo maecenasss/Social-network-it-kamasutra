@@ -1,3 +1,5 @@
+import { usersAPI } from "../components/Api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 //create user Profile then you click to userPhoto
@@ -33,7 +35,6 @@ const profileReducer = (state = initialState, action) => {
             case SET_USER_PROFILE: { 
                 return {...state, profile: action.profile}
             }      
-
             default:
                 return state;
     }
@@ -43,6 +44,10 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreator = () => ({type: ADD_POST})
 export const onPostChangeActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile: profile })
+export const getUserProfile = (userId) => (dispatch) => {
+    usersAPI.getProfile(userId).then(response => {dispatch (setUserProfile(response.data));
+    });
+}      
 
 export default profileReducer;
 

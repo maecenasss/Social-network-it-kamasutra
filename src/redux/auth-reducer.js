@@ -1,3 +1,5 @@
+import { authAPI } from "../components/Api/api";
+
 const SET_USER_DATA = 'FOLLOW';
 
 
@@ -26,6 +28,15 @@ const authReducer = (state = initialState, action) => {
 //створюємо функці] для створення об'єктів (action) в MyPosts для додавання постів та їх зміни
 //ActionCreator - функція задача якої вернути об'єкт action
 export const setAuthUserData = (userId, email, login) => ({type: SET_USER_DATA, data: {userId, email, login}})
+export const getAuthUserData = () => (dispatch) => {
+    authAPI.me()
+    .then(response => {  
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data;
+        dispatch (setAuthUserData (id, email, login))
+        }
+    });
+}
 export default authReducer;
 
     
