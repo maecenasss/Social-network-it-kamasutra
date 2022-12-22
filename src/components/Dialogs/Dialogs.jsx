@@ -4,6 +4,7 @@ import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./DialogMessage/Mesage";
 import { sendMessageCreator, updateNewMessageBodyCreator } from "../../redux/dialog-reducer";
+import { Navigate, redirect } from "react-router-dom";
 
 const Dialogs = (props) => {
 
@@ -20,7 +21,9 @@ const Dialogs = (props) => {
     let onNewMassageChange = (e) => {
        let body = e.target.value;
        props.updateNewMessageBody (body);
-    }  
+    } 
+    //якщо юзер не залогінений, повертаємо до логіну 
+    if (!props.isAuth) return <Navigate to = {'/login'}/>
 
     return (
         <div className='app-wrapper app-wrapper-content'>
