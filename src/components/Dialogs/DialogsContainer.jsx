@@ -3,6 +3,7 @@ import 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/App.css'
 import { sendMessageCreator, updateNewMessageBodyCreator } from "../../redux/dialog-reducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
+import { withAuthRedirect } from "../../hoc/AuthRedirect";
 
 let mapStateProps = (state) => {
     return {
@@ -24,6 +25,8 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const DialogsContainer = connect (mapStateProps, mapDispatchToProps)(Dialogs)
+let AuthRedirectComponent = withAuthRedirect (Dialogs)
 
-export default DialogsContainer;
+const DialogsContainer = connect (mapStateProps, mapDispatchToProps)(AuthRedirectComponent)
+
+export default DialogsContainer
