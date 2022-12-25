@@ -5,6 +5,7 @@ import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
 import { toggleFollowingProgress } from "../../redux/users-reducer";
 import { withAuthRedirect } from "../../hoc/AuthRedirect";
+import { compose } from "redux";
 
 
 //create class Users і компоненту для запитів на сервер
@@ -73,15 +74,11 @@ let mapStateToProps = (state) => {
 //         },  
 //     }
 // }A
-
-export default withAuthRedirect (connect (mapStateToProps, 
-    {
-        follow,
-        unfollow,
-        setCurrentPage,
-        toggleFollowingProgress, 
-        //thunk - фунція, що створена в users-reducer for patching actions
-        getUsers   
-        },  
-   
-    ) (UsersContainer));
+//function compose to connect different HOC
+export default compose (
+    withAuthRedirect,
+    connect (mapStateToProps, {follow,unfollow,setCurrentPage,toggleFollowingProgress, //thunk - фунція, що створена в users-reducer for patching actions
+            getUsers   
+            },  
+        )    
+)(UsersContainer)
