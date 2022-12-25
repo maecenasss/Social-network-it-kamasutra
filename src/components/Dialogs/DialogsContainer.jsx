@@ -8,8 +8,7 @@ import { withAuthRedirect } from "../../hoc/AuthRedirect";
 let mapStateProps = (state) => {
     return {
         messagePage: state.messagePage,
-        isAuth: state.auth.isAuth
-    }
+          }
 };
 
 let mapDispatchToProps = (dispatch) => {

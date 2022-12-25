@@ -4,6 +4,7 @@ import { follow, unfollow, setCurrentPage,  getUsers} from "../../redux/users-re
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
 import { toggleFollowingProgress } from "../../redux/users-reducer";
+import { withAuthRedirect } from "../../hoc/AuthRedirect";
 
 
 //create class Users і компоненту для запитів на сервер
@@ -73,7 +74,7 @@ let mapStateToProps = (state) => {
 //     }
 // }A
 
-export default connect (mapStateToProps, 
+export default withAuthRedirect (connect (mapStateToProps, 
     {
         follow,
         unfollow,
@@ -83,4 +84,4 @@ export default connect (mapStateToProps,
         getUsers   
         },  
    
-    ) (UsersContainer);
+    ) (UsersContainer));
