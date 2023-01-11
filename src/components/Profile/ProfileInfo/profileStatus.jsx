@@ -5,20 +5,29 @@ class ProfileStatus extends React.Component {
     //створюємо локальний state
     state = {
         //створбємо режим редагування статуса edit mode 
-        editMode: false
+        editMode: false,
+        status: this.props.status
     } 
-    activateEditMode () {
+    activateEditMode = () => {
         //створюємо асинхронний метод setState для зміни state 
         this.setState ({
             editMode: true
         })   
     }
 
-    deactivateEditMode () {
+    deactivateEditMode = () => {
         //створюємо асинхронний метод setState для зміни state 
         this.setState ({
             editMode: false
-        })   
+        });
+        this.props.updateStatus(this.state.status);
+    }
+
+    onStatusChange = (e) => {
+        //створюємо асинхронний метод setState для зміни state 
+        this.setState ({
+            status: e.currentTarget.value
+        });
     }
     
     render(){
@@ -26,13 +35,13 @@ class ProfileStatus extends React.Component {
         <div>
             {!this.state.editMode &&
                 <div>
-                    <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</span>
+                    <span onDoubleClick={this.activateEditMode}>{this.props.status || 'No Status'}</span>
                 </div>
             }
         {this.state.editMode &&
             <div>
                 {/* onBlur - метод коли поле статуса стає неактивним після того як з нього прибрати мишку; autoFocu - курсор в статусі стає біля останньої літери */}
-                <input autoFocus = {true} onBlur={this.deactivateEditMode.bind(this)} value={this.props.status} />
+                <input onChange={this.onStatusChange} autoFocus = {true} onBlur={this.deactivateEditMode} value={this.state.status} />
             </div>
         }
         </div>
