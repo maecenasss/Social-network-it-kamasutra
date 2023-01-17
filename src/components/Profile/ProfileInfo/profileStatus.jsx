@@ -31,7 +31,7 @@ class ProfileStatus extends React.Component {
     }
 
     componentDidUpdate (prevProps, prevState) {
-        //якщо попередній статус не відповідає тому, що приходить із пропасами, то установлюється новий статус, що прийшов із пропсами
+        //якщо попередній статус не відповідає тому, що приходить із пропсами, то установлюється новий статус, тобто той, що прийшов із пропсами
         if (prevProps.status !== this.props.status) {
             this.setState ({
                 status: this.props.status
@@ -39,7 +39,7 @@ class ProfileStatus extends React.Component {
         }
 
     }
-    
+
     render(){
     return (
         <div>
