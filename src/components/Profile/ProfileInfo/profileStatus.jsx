@@ -29,6 +29,16 @@ class ProfileStatus extends React.Component {
             status: e.currentTarget.value
         });
     }
+
+    componentDidUpdate (prevProps, prevState) {
+        //якщо попередній статус не відповідає тому, що приходить із пропасами, то установлюється новий статус, що прийшов із пропсами
+        if (prevProps.status !== this.props.status) {
+            this.setState ({
+                status: this.props.status
+            });
+        }
+
+    }
     
     render(){
     return (
