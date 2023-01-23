@@ -15,12 +15,8 @@ const Dialogs = (props) => {
     let messagesElements = state.messages.map (m => <Message message = {m.message}/>)
     let newMessageBody = state.newMessageBody;
 
-    let onSendMessageClick = () => {
-        props.sendMessage();
-    }  
-
-    let addNewMassage = (values) => {
-        alert(values.newMessageBody)
+     let addNewMassage = (values) => {
+        props.sendMessage(values.newMessageBody)
       };
     //якщо юзер не залогінений, повертаємо до логіну 
     if (!props.isAuth) return <Navigate to = {'/login'}/>
