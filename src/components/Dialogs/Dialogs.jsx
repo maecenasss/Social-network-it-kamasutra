@@ -3,9 +3,10 @@ import 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/App.css'
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./DialogMessage/Mesage";
-import { sendMessageCreator, updateNewMessageBodyCreator } from "../../redux/dialog-reducer";
 import { Navigate, redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
+import { TextArea } from "../Common/Preloader/FormControl/FormControl";
+import { required, maxLengthCreator } from "../../utils/validator";
 
 const Dialogs = (props) => {
 
@@ -37,10 +38,13 @@ const Dialogs = (props) => {
         )
 }
 
+const maxLength50 = maxLengthCreator(50);
+
 const AddMessageForm = (props) => {
     return <form onSubmit = {props.handleSubmit}>
         <div>
-        <Field component='textarea' name = 'newMessageBody' placeholder="Enter your message"/>
+        <Field component={TextArea} validate ={[required, maxLength50]} 
+        name = 'newMessageBody' placeholder="Enter your message"/>
         </div>
     <div> <button>Send</button> </div>
     </form>
