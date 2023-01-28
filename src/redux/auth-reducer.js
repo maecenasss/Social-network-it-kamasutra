@@ -17,7 +17,7 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA: 
                return {
                 ...state,
-                ...action.data, 
+                ...action.payload, 
                 isAuth: true
         }           
         default:
@@ -27,16 +27,38 @@ const authReducer = (state = initialState, action) => {
 
 //створюємо функці] для створення об'єктів (action) в MyPosts для додавання постів та їх зміни
 //ActionCreator - функція задача якої вернути об'єкт action
-export const setAuthUserData = (userId, email, login) => ({type: SET_USER_DATA, data: {userId, email, login}})
+export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}})
+
 export const getAuthUserData = () => (dispatch) => {
     authAPI.me()
     .then(response => {  
     if (response.data.resultCode === 0) {
         let {id, email, login} = response.data.data;
-        dispatch (setAuthUserData (id, email, login))
+        dispatch (setAuthUserData (id, email, login, true))
         }
     });
 }
+
+export const login = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+    //якщо логіі і код є правильними, то отримуємо дані юзера із сервера
+    .then(response => {  
+    if (response.data.resultCode === 0) {
+          dispatch (getAuthUserData())
+        }
+    });
+}
+
+export const logout = () => (dispatch) => {
+    authAPI.logout()
+        .then(response => {  
+//якщо вилогінюємся то установлюються нульові значення ід, емеіла і логіна
+     if (response.data.resultCode === 0) {
+          dispatch (setAuthUserData(null, null, null, false))
+        }
+    });
+}
+
 export default authReducer;
 
     
