@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { authAPI } from "../components/Api/api";
 
 const SET_USER_DATA = 'FOLLOW';
@@ -39,11 +40,14 @@ export const getAuthUserData = () => (dispatch) => {
 }
 
 export const login = (email, password, rememberMe) => (dispatch) => {
+    
     authAPI.login(email, password, rememberMe)
     //якщо логіі і код є правильними, то отримуємо дані юзера із сервера
     .then(response => {  
     if (response.data.resultCode === 0) {
           dispatch (getAuthUserData())
+        } else {
+            dispatch(stopSubmit ('login', {_error: 'Common Error'}));
         }
     });
 }
