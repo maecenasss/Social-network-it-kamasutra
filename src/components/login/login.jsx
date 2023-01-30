@@ -4,8 +4,8 @@ import { Input } from "../Common/Preloader/FormControl/FormControl";
 import { required } from "../../utils/validator";
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
-import { Navigate, redirect } from "react-router-dom";
-import { RedirectFunction } from "react-router-dom";
+import { Navigate} from "react-router-dom";
+
 
 const LoginForm = (props) => {
     return (
