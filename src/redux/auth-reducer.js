@@ -40,14 +40,14 @@ export const getAuthUserData = () => (dispatch) => {
 }
 
 export const login = (email, password, rememberMe) => (dispatch) => {
-    
     authAPI.login(email, password, rememberMe)
     //якщо логіі і код є правильними, то отримуємо дані юзера із сервера
     .then(response => {  
     if (response.data.resultCode === 0) {
           dispatch (getAuthUserData())
         } else {
-            dispatch(stopSubmit ('login', {_error: 'Common Error'}));
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+            dispatch(stopSubmit ('login', {_error: message}));
         }
     });
 }

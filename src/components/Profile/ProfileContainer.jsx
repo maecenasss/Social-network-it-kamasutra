@@ -13,7 +13,7 @@ class ProfileContainer extends React.Component  {
       componentDidMount () {
       let userId = this.props.router.params.userId;
       if (!userId) {
-        userId = 2;
+        userId = this.props.autorizedUserId;
       }
       this.props.getUserProfile(userId);
       this.props.getStatus(userId);
@@ -27,7 +27,9 @@ let AuthRedirectComponent = withAuthRedirect (ProfileContainer)
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
-  status: state.profilePage.status
+  status: state.profilePage.status,
+  autorizedUserId: state.auth.userId,
+  isAuth: state.auth.isAuth
 })
 
 //створюємо перемінну для отримання даних із URL за допомогою функції withRouter
