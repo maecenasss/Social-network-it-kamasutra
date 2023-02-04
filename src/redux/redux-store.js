@@ -6,6 +6,7 @@ import sidebarReducer from "./sidebar-reducer copy";
 import usersReducer from "./users-reducer";
 import thunkMiddleware from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form';
+import appReducer from "./app-reducer";
 
 //створюємо двіжок шляхом комбінації ред'юсерів
 
@@ -16,7 +17,8 @@ let store = configureStore ({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    form: formReducer
+    form: formReducer,
+    app: appReducer 
     },
     
 }, applyMiddleware(thunkMiddleware));

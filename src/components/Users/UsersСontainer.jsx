@@ -76,7 +76,7 @@ let mapStateToProps = (state) => {
 // }A
 //function compose to connect different HOC
 export default compose (
-    withAuthRedirect,
+    // withAuthRedirect,
     connect (mapStateToProps, {follow,unfollow,setCurrentPage,toggleFollowingProgress, //thunk - фунція, що створена в users-reducer for patching actions
             getUsers   
             },  
