@@ -84,11 +84,13 @@ export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFe
 export const toggleFollowingProgress = (isFetching, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID })
 
 //створюємо thunk функцію для отримання юзерів із сервера
-export const requestUsers = (currentPage, pageSize) => {
+export const requestUsers = (page, pageSize) => {
     return (dispatch) => {
         dispatch (toggleIsFetching (true));
+        dispatch (setCurrentPage (page));
 
-        usersAPI.getUsers (currentPage, pageSize).then(data => {
+
+        usersAPI.getUsers (page, pageSize).then(data => {
                 dispatch (toggleIsFetching (false)); 
                 dispatch (setUsers(data.items));
                 dispatch (setTotalUsersCount(data.totalCount=100))
