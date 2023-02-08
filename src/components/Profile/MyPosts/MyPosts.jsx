@@ -8,22 +8,31 @@ import Post from './Post/Post';
 
 let maxLength10 = maxLengthCreator(10); 
 
-const MyPosts = (props) => {
-  
-  let postsElements = props.posts.map (p => <Post message = {p.message} count = {p.count}/>)
-  
-  let newPostElement = React.createRef();
+class MyPosts extends Component {
 
-  let onAddPost = (values) => {
-    props.addPost(values.newPostText);
-  }  
-return <div className={s.postsBlock}>
+//shoudComponentUpdate - метод визначення нових props & state і заміни старих
+shoudComponentUpdate (nextProps, nextState) {
+//якщо наступні пропси/стейти не однакові із тими які отримані компонентою, то метод їх змінює на нові
+  return nextProps !== this.props || nextState !== this.state 
+      }
+
+  render() {
+    let postsElements = this.props.posts.map(p => <Post message={p.message} count={p.count} />);
+    let newPostElement = React.createRef();
+
+    let onAddPost = values => {
+      this.props.addPost(values.newPostText);
+    };
+
+    return (<div className={s.postsBlock}>
                 <h2>My posts</h2>
-                <AddNewPostForm onSubmit = {onAddPost}/>
+                <AddNewPostForm onSubmit={onAddPost} />
                 <div className={s.posts}>
                   {postsElements}
                 </div>
-          </div>
+          </div>);
+  }
+
 }
 
 let AddNewPostForm = (props) => {
