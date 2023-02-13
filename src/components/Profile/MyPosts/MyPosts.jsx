@@ -17,7 +17,10 @@ shoudComponentUpdate (nextProps, nextState) {
       }
 
   render() {
-    let postsElements = this.props.posts.map(p => <Post message={p.message} count={p.count} />);
+    let postsElements = 
+    {...props.posts}
+      .reverse()
+      .map(p => <Post message={p.message} count={p.count} />);
     let newPostElement = React.createRef();
 
     let onAddPost = values => {
