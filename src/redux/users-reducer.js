@@ -85,42 +85,36 @@ export const toggleFollowingProgress = (isFetching, userID) => ({type: TOGGLE_IS
 
 //створюємо thunk функцію для отримання юзерів із сервера
 export const requestUsers = (page, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch (toggleIsFetching (true));
         dispatch (setCurrentPage (page));
 
-
-        usersAPI.getUsers (page, pageSize).then(data => {
-                dispatch (toggleIsFetching (false)); 
-                dispatch (setUsers(data.items));
-                dispatch (setTotalUsersCount(data.totalCount=100))
-        });
+        let data = await usersAPI.getUsers (page, pageSize);
+        dispatch (toggleIsFetching (false)); 
+        dispatch (setUsers(data.items));
+        dispatch (setTotalUsersCount(data.totalCount=100));
     }
 }
 //створємо thunk функцію для підписування/відписування від юзерів
 export const follow = (userID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch (toggleFollowingProgress(true, userID));
-        usersAPI.follow (userID)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followSuccess(userID));
+        let response = await usersAPI.follow (userID);
+            if (response.data.resultCode === 0) {
+                dispatch(followSuccess(userID));
         }
         dispatch (toggleFollowingProgress(false, userID));
-        });
     }
 }
 
 export const unfollow = (userID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch (toggleFollowingProgress(true, userID));
-        usersAPI.unfollow (userID)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowSuccess(userID));
+        let response = await usersAPI.unfollow (userID);
+            if (response.data.resultCode === 0) {
+                dispatch(unfollowSuccess(userID));
         }
         dispatch (toggleFollowingProgress(false, userID));
-        });
     }
 }
 
