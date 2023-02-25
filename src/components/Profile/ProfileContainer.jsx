@@ -46,7 +46,7 @@ function withRouter(Component) {
 }
 
 export default compose (
-  connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
+  connect (mapStateToProps, { getUserProfile, getStatus, updateStatus }),
   withRouter,
   withAuthRedirect
 )(ProfileContainer)

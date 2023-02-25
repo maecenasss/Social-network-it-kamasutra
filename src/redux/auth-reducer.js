@@ -1,4 +1,3 @@
-import { Await } from "react-router-dom";
 import { stopSubmit } from "redux-form";
 import { authAPI } from "../components/Api/api";
 
