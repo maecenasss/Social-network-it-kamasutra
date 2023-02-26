@@ -1,11 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Paginator from "../Common/Paginator/Paginator";
 import styles from './users.module.css'
 import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
 
-let Users = (props) => {
+let Users = ({currentPage, totalUsersCount, pageSize, onPageChanged, ...props}) => {
     //create pages counter and create pages area & округляємо до цілого
-    let pagesCount = Math.ceil (props.totalUsersCount/props.pageSize);
+    let pagesCount = Math.ceil (totalUsersCount/pageSize);
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
@@ -14,14 +15,14 @@ let Users = (props) => {
     
     return <div className='app-wrapper app-wrapper-content'>
     {/*робимо так щоб відображося виділення сторінки юзера що відкрита*/}
-    <div>
-     {pages.map (p => {
+     {/* {pages.map (p => {
          return  <span onClick = {() => {props.onPageChanged(p)}} className={props.currentPage === p && styles.selectedPage} > {p} </span>
      })}
-     </div>
+     </div> */}
+        <Paginator currentPage = {currentPage} onPageChanged = {onPageChanged} totalUsersCount = {totalUsersCount} pageSize = {pageSize}/>
 
     {//make areas from state - users
-     props.users.map (u => <div key = {u.id}>
+        props.users.map (u => <div key = {u.id}>
          {/* створюємо картинку юзера і кнопку фолов */}
          <span>
              <div>
