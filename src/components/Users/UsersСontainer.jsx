@@ -13,13 +13,17 @@ class UsersContainer extends React.Component {
     
     //componentDidMount use for get request to server
     componentDidMount () {
+    //для спрощення кода щоб не писати this.props створюємо перемінну 
+    let {currentPage, pageSize} = this.props
     //thunk function - фунція, що створена в users-reducer for patching actions 
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    this.props.getUsers(currentPage, pageSize);
     }
     //create method to change pages with onClick
     onPageChanged = (pageNumber) => {
 //thunk function - фунція, що створена в users-reducer for patching actions
-       this.props.getUsers (pageNumber, this.props.pageSize)
+//для спрощення кода щоб не писати this.props створюємо перемінну 
+    let {pageSize} = this.props
+    this.props.getUsers (pageNumber, pageSize)
     }
 
 //create method render what return jsx 
