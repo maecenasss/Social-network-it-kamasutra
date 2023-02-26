@@ -1,57 +1,22 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import Paginator from "../Common/Paginator/Paginator";
-import styles from './users.module.css'
-import userPhoto from 'C:/ИТ/React/It-Kamasutra/react-way-of-samurai/src/assets/img/profile.png'
+import User from "./User";
 
-let Users = ({currentPage, totalUsersCount, pageSize, onPageChanged, ...props}) => {
-    //create pages counter and create pages area & округляємо до цілого
-    let pagesCount = Math.ceil (totalUsersCount/pageSize);
+let Users = ({currentPage, totalUsersCount, pageSize, onPageChanged, users, ...props}) => {
 
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
-    
     return <div className='app-wrapper app-wrapper-content'>
     {/*робимо так щоб відображося виділення сторінки юзера що відкрита*/}
-     {/* {pages.map (p => {
-         return  <span onClick = {() => {props.onPageChanged(p)}} className={props.currentPage === p && styles.selectedPage} > {p} </span>
-     })}
-     </div> */}
+  
         <Paginator currentPage = {currentPage} onPageChanged = {onPageChanged} totalUsersCount = {totalUsersCount} pageSize = {pageSize}/>
-
+        <div>
     {//make areas from state - users
-        props.users.map (u => <div key = {u.id}>
-         {/* створюємо картинку юзера і кнопку фолов */}
-         <span>
-             <div>
-                <NavLink to = {'/Profile/' + u.id}>
-                 <img src={u.photos.small != null ? u.photos.small : userPhoto} className = {styles.userPhoto} alt=""/>
-                 </NavLink>
-             </div>
-             <div>
-                 {/* створюємо переключателі фолов і анфолов за допомогою тернарних операторів */}
-                 { u.followed
-                 ? <button disabled = {props.followingInProgress.some (id=>id===u.id)} onClick={() => {props.unfollow (u.id)}}>
-                    Unfollow</button>
-
-                 : <button disabled = {props.followingInProgress.some (id=>id===u.id)} onClick={() => {props.follow (u.id)}}>           
-                 Follow</button>}
-             </div>
-         </span>
-         {/* створюємо області із іменем та статусом */}
-         <span>
-             <div>{u.name}</div>
-             <div>{u.status}</div>
-         </span>
-         {/* створюємо область та місто */}
-         <span>
-             <div>{'u.location.country'}</div>
-             <div>{'u.location.city'}</div>
-         </span>
-     </div>)
+        users.map (u => <User user = {u} 
+                            followingInProgress = {props.followingInProgress}
+                            key = {u.id}
+                            unfollow = {props.unfollow}
+                            follow = {props.follow}/>)
  }
+        </div>
 </div>
 }
 
