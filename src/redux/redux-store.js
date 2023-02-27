@@ -1,4 +1,4 @@
-import {applyMiddleware, configureStore} from "@reduxjs/toolkit";
+import {applyMiddleware, combineReducers, compose, configureStore, createStore} from "@reduxjs/toolkit";
 import authReducer from "./auth-reducer";
 import dialogReducer from "./dialog-reducer";
 import profileReducer from "./profile-reducer";
@@ -10,8 +10,7 @@ import appReducer from "./app-reducer";
 
 //створюємо двіжок шляхом комбінації ред'юсерів
 
-let store = configureStore ({
-    reducer: {
+let reducers = combineReducers ({
     messagePage: dialogReducer,
     profilePage: profileReducer,
     sidebar: sidebarReducer,
@@ -19,10 +18,11 @@ let store = configureStore ({
     auth: authReducer,
     form: formReducer,
     app: appReducer 
-    },
-    
-}, applyMiddleware(thunkMiddleware));
+    });
 
-window.store = store;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore (reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+window.__store__ = store;
 
 export default store;
